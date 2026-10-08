@@ -2,6 +2,8 @@
 
 Demo RESTful API untuk materi kuliah: **REST API**, **Docker**, **CI/CD**, dan **Security**.
 
+Panduan praktikum tim lima mahasiswa: [PANDUAN_CICD_MAHASISWA.md](PANDUAN_CICD_MAHASISWA.md).
+
 ## Tech Stack
 
 - **Backend**: Python / Flask + flask-restx (Swagger UI)
