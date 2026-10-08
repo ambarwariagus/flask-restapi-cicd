@@ -127,10 +127,15 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    async function errorMessage(response, fallback) {
+      const body = await response.json().catch(() => ({}));
+      return `HTTP ${response.status}: ${body.message || fallback}`;
+    }
+
     async function deleteUser(id) {
       if (!confirm('Hapus user ini?')) return;
       const response = await fetch(`/api/${id}`, { method: 'DELETE', headers: headers() });
-      if (!response.ok) return showMessage((await response.json()).message || 'Gagal hapus user.', 'error');
+      if (!response.ok) return showMessage(await errorMessage(response, 'Gagal hapus user.'), 'error');
       showMessage('User dihapus.', 'success');
       await loadUsers();
     }
@@ -145,7 +150,7 @@
       const url = editingId ? `/api/${editingId}` : '/api/';
       const method = editingId ? 'PUT' : 'POST';
       const response = await fetch(url, { method, headers: headers(), body: JSON.stringify(payload) });
-      if (!response.ok) return showMessage((await response.json()).message || 'Gagal menyimpan user.', 'error');
+      if (!response.ok) return showMessage(await errorMessage(response, 'Gagal menyimpan user.'), 'error');
       showMessage(editingId ? 'User diperbarui.' : 'User ditambahkan.', 'success');
       resetForm();
       await loadUsers();
