@@ -19,6 +19,12 @@ def auth_headers():
     return {"X-API-KEY": "test-key", "Content-Type": "application/json"}
 
 
+def test_homepage(client):
+    resp = client.get("/app")
+    assert resp.status_code == 200
+    assert b"User Registration CRUD" in resp.data
+
+
 def test_health(client):
     resp = client.get("/health")
     assert resp.status_code == 200

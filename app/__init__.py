@@ -3,7 +3,7 @@ import sqlite3
 import tempfile
 
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, redirect, render_template
 from flask_cors import CORS
 from flask_restx import Api
 
@@ -78,6 +78,14 @@ def create_app(testing=False):
     from app.routes import ns
 
     api.add_namespace(ns, path="/api")
+
+    @app.route("/")
+    def index():
+        return redirect("/app")
+
+    @app.route("/app")
+    def user_app():
+        return render_template("index.html")
 
     @app.route("/health")
     def health():
